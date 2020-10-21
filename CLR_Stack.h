@@ -1,6 +1,6 @@
 /////////////////////////////////////////////////
-//	V1.0
-//	made by CLR in his spare time during the March 2020 COVID-19 lockdown
+//	V1.1	October 2020
+//	v1.0 made by CLR in his spare time during the March 2020 COVID-19 lockdown
 //
 //	This file is part of CLR_Stack.
 //
@@ -69,6 +69,11 @@ bool CLR_STACK_is_empty(CLR_STACK* S);
 bool CLR_STACK_is_full(CLR_STACK* S);
 
 /**
+ * Returns the space occupied by date in the passed CLR_STACK stack
+ * */
+int CLR_STACK_get_used_space(CLR_STACK* S);
+
+/**
  * Returns the space available for new data in the passed CLR_STACK stack.
  * Putting more than this number will result in either an error or older data being erased, depending of the mode
  * */
@@ -84,6 +89,11 @@ int CLR_STACK_get_free_space(CLR_STACK* S);
  * \param mode the operation mode for the stack
  *
  * \returns A CLR_STACK_ERROR_CODES value.
+ * \li CLR_STACK_SUCCESS if init succesful.
+ * \li CLR_STACK_ERROR_UNKNOWN if an error not accounted for in my design happened.
+ * \li CLR_STACK_ERROR_WRONG_SIZE if size < 1.
+ * \li CLR_STACK_ERROR_WRONG_MODE if the mode passed is not included in CLR_STACK_OPERATION_MODES.
+ * \li CLR_STACK_ERROR_NULL_POINTER if bytes is a NULL pointer.
  *
  * */
 CLR_STACK_ERROR_CODES CLR_STACK_init(CLR_STACK* S, unsigned char * mem_chunk, int size, CLR_STACK_OPERATION_MODES mode);
@@ -95,10 +105,14 @@ CLR_STACK_ERROR_CODES CLR_STACK_init(CLR_STACK* S, unsigned char * mem_chunk, in
  * \param bytes pointer to the memory block to put in the stack
  * \param size the size in BYTES of the memory block to put.
  *
- * \returns A CLR_STACK_ERROR_CODES value.
+  * \returns A CLR_STACK_ERROR_CODES value:
+ * \li CLR_STACK_SUCCESS if push succesful.
+ * \li CLR_STACK_ERROR_UNKNOWN if an error not accounted for in my design happened.
+ * \li CLR_STACK_ERROR_PUT_NOT_ENOUGH_SPACE if size > (size_maximum - size_current).
+ * \li CLR_STACK_ERROR_NULL_POINTER if bytes is a NULL pointer.
  *
  * */
-CLR_STACK_ERROR_CODES CLR_STACK_put(CLR_STACK* S, unsigned char * bytes, int size);
+CLR_STACK_ERROR_CODES CLR_STACK_push(CLR_STACK* S, unsigned char * bytes, int size);
 
 /**
  * Function for popping data from a PREVIOUSLY INITIALIZED CLR_STACK Structure.
@@ -107,7 +121,11 @@ CLR_STACK_ERROR_CODES CLR_STACK_put(CLR_STACK* S, unsigned char * bytes, int siz
  * \param bytes pointer to the memory block in which the popped data will be written.
  * \param size the amount of bytes to pop from the stack, it must be equal or smaller than the "bytes" memory block
  *
- * \returns A CLR_STACK_ERROR_CODES value.
+ * \returns A CLR_STACK_ERROR_CODES value:
+ * \li CLR_STACK_SUCCESS if pop succesful.
+ * \li CLR_STACK_ERROR_UNKNOWN if an error not accounted for in my design happened.
+ * \li CLR_STACK_ERROR_POP_NOT_ENOUGH_BYTES if size > size_current.
+ * \li CLR_STACK_ERROR_NULL_POINTER if bytes is a NULL pointer.
  *
  * */
 CLR_STACK_ERROR_CODES CLR_STACK_pop(CLR_STACK* S, unsigned char * bytes, int size);
@@ -119,7 +137,11 @@ CLR_STACK_ERROR_CODES CLR_STACK_pop(CLR_STACK* S, unsigned char * bytes, int siz
  * \param bytes pointer to the memory block in which the peeked data will be written.
  * \param size the amount of bytes to peek from the stack, it must be equal or smaller than the "bytes" memory block
  *
- * \returns A CLR_STACK_ERROR_CODES value.
+ * \returns A CLR_STACK_ERROR_CODES value:
+ * \li CLR_STACK_SUCCESS if pop succesful.
+ * \li CLR_STACK_ERROR_UNKNOWN if an error not accounted for in my design happened.
+ * \li CLR_STACK_ERROR_POP_NOT_ENOUGH_BYTES if size > size_current.
+ * \li CLR_STACK_ERROR_NULL_POINTER if bytes is a NULL pointer.
  *
  * */
 CLR_STACK_ERROR_CODES CLR_STACK_peek(CLR_STACK* S, unsigned char * bytes, int size);
