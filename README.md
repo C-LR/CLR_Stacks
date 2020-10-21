@@ -34,3 +34,9 @@ An example file is provided with a CLI application using the basic functionality
 Changelog
 
 v1.0 Initial Release.
+
+v1.1 Various Improvements
+  Remade example program with multiple improvements, both QoL and Robustness.
+  Added a function to get the number of bytes in a stack.
+  Renamed CLR_STACK_put to CLR_STACK_push. In case somebody was using v1.0 and is updating to v1.1 it's function calls must be renamed too.
+  Improved Documentation.
