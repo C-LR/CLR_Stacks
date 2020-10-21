@@ -30,6 +30,10 @@ bool CLR_STACK_is_full(CLR_STACK* S){
 	return (S->size_current == S->size_maximum);
 }
 
+int CLR_STACK_get_used_space(CLR_STACK* S){
+	return (S->size_current);
+}
+
 int CLR_STACK_get_free_space(CLR_STACK* S){
 	return (S->size_maximum - S->size_current);
 }
@@ -70,7 +74,7 @@ CLR_STACK_ERROR_CODES CLR_STACK_init(CLR_STACK* S, unsigned char * mem_chunk, in
 	return ret;
 }
 
-CLR_STACK_ERROR_CODES CLR_STACK_put(CLR_STACK* S, unsigned char * bytes, int size){
+CLR_STACK_ERROR_CODES CLR_STACK_push(CLR_STACK* S, unsigned char * bytes, int size){
 	CLR_STACK_ERROR_CODES ret = CLR_STACK_ERROR_UNKNOWN;
 
 	if (bytes != 0)
@@ -168,4 +172,6 @@ CLR_STACK_ERROR_CODES CLR_STACK_peek(CLR_STACK* S, unsigned char * bytes, int si
 
 	return ret;
 }
+
+
 
